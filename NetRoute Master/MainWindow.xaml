@@ -1,0 +1,159 @@
+﻿<Window x:Class="NetRouteMaster.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="NetRoute Master" Height="600" Width="800"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,15">
+            <TextBlock Text="NetRoute Master" 
+                       FontSize="24" 
+                       FontWeight="Bold" 
+                       Margin="0,0,0,10"/>
+            <TextBlock Text="网络路由配置管理工具" 
+                       Foreground="Gray"/>
+        </StackPanel>
+
+        <!-- Network Interface Settings -->
+        <GroupBox Grid.Row="1" Header="网络设置" Margin="0,0,0,10">
+            <StackPanel Margin="5">
+                <Label Content="选择网卡:"/>
+                <DockPanel>
+                    <ComboBox x:Name="NetworkInterfacesComboBox" 
+                             Width="400" 
+                             HorizontalAlignment="Left"
+                             DisplayMemberPath="Description"
+                             SelectedValuePath="IPAddress"
+                             SelectionChanged="NetworkInterfacesComboBox_SelectionChanged"/>
+                    <Button Content="刷新网卡列表" 
+                            Click="RefreshInterfaces_Click" 
+                            Margin="10,0,0,0"/>
+                </DockPanel>
+                <TextBlock x:Name="SelectedInterfaceInfo" 
+                           Margin="0,5,0,0" 
+                           Foreground="Gray"/>
+            </StackPanel>
+        </GroupBox>
+
+        <!-- URL and IP Management -->
+        <TabControl Grid.Row="2" Margin="0,0,0,10">
+            <TabItem Header="URL管理">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <DockPanel Grid.Row="0" Margin="0,5">
+                        <TextBox x:Name="NewUrlTextBox" 
+                                Width="300" 
+                                Margin="0,0,5,0"
+                                KeyDown="NewUrlTextBox_KeyDown"/>
+                        <Button Content="添加URL" 
+                                Click="AddUrl_Click"/>
+                    </DockPanel>
+                    <TextBox x:Name="UrlListTextBox" 
+                             Grid.Row="1" 
+                             AcceptsReturn="True" 
+                             TextWrapping="Wrap" 
+                             VerticalScrollBarVisibility="Auto"
+                             Margin="0,5,0,0"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="IP管理">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+                    <DockPanel Grid.Row="0" Margin="0,5">
+                        <TextBox x:Name="NewIpTextBox" 
+                                Width="300" 
+                                Margin="0,0,5,0"
+                                KeyDown="NewIpTextBox_KeyDown"/>
+                        <Button Content="添加IP" 
+                                Click="AddIp_Click"/>
+                    </DockPanel>
+                    <TextBox x:Name="IpListTextBox" 
+                             Grid.Row="1" 
+                             AcceptsReturn="True" 
+                             TextWrapping="Wrap" 
+                             VerticalScrollBarVisibility="Auto"
+                             Margin="0,5,0,0"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+
+        <!-- Status and Controls -->
+        <Grid Grid.Row="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Progress Bar and Status -->
+            <Grid Grid.Row="0" Margin="0,0,0,5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <ProgressBar x:Name="ConfigProgress" 
+                     Height="20" 
+                     Margin="0,0,10,0"/>
+                <TextBlock x:Name="ProgressText" 
+                   Grid.Column="1" 
+                   VerticalAlignment="Center"/>
+            </Grid>
+
+            <!-- Status and Controls -->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Log Output -->
+                <TextBox Grid.Column="0" 
+                 x:Name="LogTextBox" 
+                 Height="100"
+                 IsReadOnly="True" 
+                 TextWrapping="Wrap" 
+                 VerticalScrollBarVisibility="Auto"/>
+
+                <!-- Control Buttons -->
+                <StackPanel Grid.Column="1" 
+                    Margin="10,0,0,0">
+                    <Button x:Name="StartButton"
+                    Content="开始配置路由" 
+                    Click="StartConfig_Click" 
+                    Width="120" 
+                    Height="30"
+                    Margin="0,0,0,5"/>
+                    <Button x:Name="StopButton"
+                    Content="停止配置" 
+                    Click="StopConfig_Click" 
+                    Width="120" 
+                    Height="30"
+                    Margin="0,0,0,5"
+                    IsEnabled="False"/>
+                    <Button Content="保存设置" 
+                    Click="SaveSettings_Click" 
+                    Width="120" 
+                    Height="30"
+                    Margin="0,0,0,5"/>
+                    <Button Content="清除日志" 
+                    Click="ClearLog_Click" 
+                    Width="120" 
+                    Height="30"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+    </Grid>
+</Window>
